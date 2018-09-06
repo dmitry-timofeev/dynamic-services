@@ -2,11 +2,10 @@ package com.exonum.osgi.prototype;
 
 import com.exonum.osgi.prototype.service.UserService;
 import java.io.Console;
-import org.jboss.modules.ModuleLoadException;
 
 public class DynamicModulesMain {
 
-  public static void main(String[] args) throws ModuleLoadException {
+  public static void main(String[] args) {
     String basePath;
     if (args.length != 1) {
       basePath = "";
