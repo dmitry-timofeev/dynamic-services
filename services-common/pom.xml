@@ -10,6 +10,18 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>services-common</artifactId>
+  <packaging>jar</packaging>
 
+  <properties>
+    <pf4j.version>2.4.0</pf4j.version>
+  </properties>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.pf4j</groupId>
+      <artifactId>pf4j</artifactId>
+      <version>${pf4j.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 </project>

@@ -1,9 +1,10 @@
 package com.exonum.osgi.prototype.service;
 
-import com.exonum.osgi.prototype.model.Address;
-import com.exonum.osgi.prototype.model.User;
+import org.pf4j.ExtensionPoint;
 
-public interface UserService {
+public interface UserService extends ExtensionPoint {
   void getUserDetails(String name);
-  Address getUserAddress(String name);
+  void getUserAddress(String name);
+  void setAddressService(AddressService addressService);
+  AddressService getAddressService();
 }
