@@ -18,24 +18,10 @@
       <artifactId>services-common</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
-
-    <dependency>
-      <groupId>org.jboss.modules</groupId>
-      <artifactId>jboss-modules</artifactId>
-      <version>1.8.5.Final</version>
-    </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!--<plugin>-->
-        <!--<artifactId>maven-war-plugin</artifactId>-->
-        <!--<configuration>-->
-          <!--&lt;!&ndash; Java EE 6 doesn't require web.xml, Maven needs to catch up! &ndash;&gt;-->
-          <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
-        <!--</configuration>-->
-      <!--</plugin>-->
-
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
@@ -58,18 +44,6 @@
           </descriptorRefs>
         </configuration>
       </plugin>
-
-      <!--<plugin>-->
-        <!--<groupId>org.apache.maven.plugins</groupId>-->
-        <!--<artifactId>maven-jar-plugin</artifactId>-->
-        <!--<configuration>-->
-          <!--<archive>-->
-            <!--<manifest>-->
-              <!--<mainClass>com.exonum.osgi.prototype.DynamicModulesMain</mainClass>-->
-            <!--</manifest>-->
-          <!--</archive>-->
-        <!--</configuration>-->
-      <!--</plugin>-->
     </plugins>
   </build>
 
