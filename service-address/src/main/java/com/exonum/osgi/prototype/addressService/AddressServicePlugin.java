@@ -2,6 +2,7 @@ package com.exonum.osgi.prototype.addressService;
 
 import com.exonum.osgi.prototype.model.Address;
 import com.exonum.osgi.prototype.service.AddressService;
+import com.google.common.base.Strings;
 import java.util.HashMap;
 import java.util.Map;
 import org.pf4j.Extension;
@@ -16,7 +17,8 @@ public class AddressServicePlugin extends Plugin {
 
   @Override
   public void start() throws PluginException {
-    System.out.println("AddressService plugin started");
+    System.out.println("AddressService plugin started: and can use provided-Guava: "
+        + Strings.repeat("hi ", 1));
     super.start();
   }
 

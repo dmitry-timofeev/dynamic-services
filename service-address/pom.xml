@@ -36,6 +36,12 @@
       <version>${pf4j.version}</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>27.0.1-jre</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
