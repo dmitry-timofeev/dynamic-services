@@ -1,6 +1,5 @@
 package com.exonum.osgi.prototype.userService;
 
-import com.exonum.osgi.prototype.model.Address;
 import com.exonum.osgi.prototype.model.User;
 import com.exonum.osgi.prototype.service.AddressService;
 import com.exonum.osgi.prototype.service.UserService;
@@ -19,7 +18,7 @@ public class UserServicePlugin extends Plugin {
 
   @Override
   public void start() throws PluginException {
-    System.out.println("UserService plugin stared");
+    System.out.println("UserService plugin started");
     super.start();
   }
 

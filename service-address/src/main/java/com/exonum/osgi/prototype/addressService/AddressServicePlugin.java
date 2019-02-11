@@ -16,7 +16,7 @@ public class AddressServicePlugin extends Plugin {
 
   @Override
   public void start() throws PluginException {
-    System.out.println("AddressService plugin stared");
+    System.out.println("AddressService plugin started");
     super.start();
   }
 
