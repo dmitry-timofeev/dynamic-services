@@ -13,7 +13,7 @@
   <packaging>jar</packaging>
 
   <properties>
-    <pf4j.version>2.4.0</pf4j.version>
+    <pf4j.version>2.6.0</pf4j.version>
   </properties>
 
   <dependencies>
