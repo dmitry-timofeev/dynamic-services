@@ -13,7 +13,6 @@
 
   <properties>
     <pf4j.version>2.6.0</pf4j.version>
-    <java.version>1.8</java.version>
 
     <!-- Override below properties in each plugin's pom.xml -->
     <plugin.id>address-service</plugin.id>
@@ -45,11 +44,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.7.0</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
       </plugin>
 
       <plugin>
