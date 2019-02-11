@@ -10,14 +10,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>service-address</artifactId>
+  <version>0.1.0</version>
 
   <properties>
     <pf4j.version>2.6.0</pf4j.version>
-
-    <!-- Override below properties in each plugin's pom.xml -->
     <plugin.id>address-service</plugin.id>
     <plugin.class>com.exonum.osgi.prototype.addressService.AddressServicePlugin</plugin.class>
-    <plugin.version>0.0.1</plugin.version>
+    <plugin.version>${project.version}</plugin.version>
     <plugin.provider>Exonum</plugin.provider>
     <plugin.dependencies></plugin.dependencies>
   </properties>
