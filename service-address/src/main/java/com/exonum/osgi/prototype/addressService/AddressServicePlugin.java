@@ -39,5 +39,10 @@ public class AddressServicePlugin extends Plugin {
     public Address getAddress(String name) {
       return database.get(name);
     }
+
+    @Override
+    public Class<? extends System> getSystemClass() {
+      return System.class;
+    }
   }
 }

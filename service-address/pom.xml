@@ -10,11 +10,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>service-address</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0-classes</version>
 
   <properties>
     <pf4j.version>2.6.0</pf4j.version>
-    <plugin.id>address-service</plugin.id>
+    <plugin.id>address-service-1</plugin.id>
     <plugin.class>com.exonum.osgi.prototype.addressService.AddressServicePlugin</plugin.class>
     <plugin.version>${project.version}</plugin.version>
     <plugin.provider>Exonum</plugin.provider>
@@ -53,7 +53,7 @@
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
-          <finalName>${project.artifactId}-${project.version}-plugin</finalName>
+          <finalName>${plugin.id}-${project.version}-plugin</finalName>
           <appendAssemblyId>false</appendAssemblyId>
           <attach>false</attach>
           <archive>

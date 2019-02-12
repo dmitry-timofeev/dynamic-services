@@ -2,6 +2,7 @@ package com.exonum.osgi.prototype;
 
 import static java.util.stream.Collectors.toList;
 
+import com.exonum.osgi.prototype.service.AddressService;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,8 +12,13 @@ import org.pf4j.PluginManager;
 
 public class DynamicModulesMain {
 
-  // /home/dmitry/Documents/dynamic-services-makarov-proto/service-address/target/service-address-1.0-SNAPSHOT-plugin.jar /home/dmitry/Documents/dynamic-services-makarov-proto/service-user/target/service-user-1.0-SNAPSHOT-plugin.jar
-  public static void main(String[] args) {
+  /**
+   * Launch with two address-services.
+   */
+  public static void main(String[] args) throws InterruptedException {
+
+    Thread.sleep(20 * 1000);
+
     List<Path> pluginPaths = Arrays.stream(args)
         .map(path -> Path.of(path))
         .collect(toList());
@@ -23,9 +29,49 @@ public class DynamicModulesMain {
 
     startPlugins(pluginManager, loadedPlugins);
 
+    // All plugins are assumed to be address-service
+    var firstId = loadedPlugins.get(0);
+    var secondId = loadedPlugins.get(1);
+
+    var firstService = getRequiredExtension(pluginManager, firstId);
+    var secondService = getRequiredExtension(pluginManager, secondId);
+
+    checkAllEqual(firstService.getSystemClass(), secondService.getSystemClass(), System.class);
+
     stopPlugins(pluginManager, loadedPlugins);
 
     unloadPlugins(pluginManager, loadedPlugins);
+
+for (int i = 0; i < 8; i++) {    System.gc(); Thread.sleep(50); }
+    Thread.sleep(20 * 1000);
+  }
+
+  private static AddressService getRequiredExtension(PluginManager pluginManager, String pluginId) {
+    return pluginManager.getExtensions(AddressService.class, pluginId).get(0);
+  }
+
+  /**
+   * Check that all classes are the same (i.e., there is no reported by JMC 'multiple'
+   * loaded classes).
+   *
+   * Even for such simple scenario, JMC reports the following:
+   *
+   * Top 5 loaded classes:
+   * java.lang.Object (8)
+   * java.lang.System (7) <-- ?
+   * java.lang.Class (6)
+   * java.util.Map (6)
+   * java.util.HashMap (6)
+   */
+  @SafeVarargs
+  private static void checkAllEqual(Class<? extends System>... classes) {
+    Class<? extends System> first = classes[0];
+    for (var nextClass : classes) {
+      if (first != nextClass) {
+        throw new AssertionError(first + " (cl = " + first.getClassLoader() + ") != " + nextClass
+         + "(cl = " + nextClass.getClassLoader() + ")");
+      }
+    }
   }
 
   /**
