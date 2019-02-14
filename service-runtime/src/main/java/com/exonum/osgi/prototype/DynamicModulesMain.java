@@ -13,8 +13,8 @@ public class DynamicModulesMain {
 
   // /home/dmitry/Documents/dynamic-services-makarov-proto/service-address/target/service-address-1.0-SNAPSHOT-plugin.jar /home/dmitry/Documents/dynamic-services-makarov-proto/service-user/target/service-user-1.0-SNAPSHOT-plugin.jar
   public static void main(String[] args) throws InterruptedException {
-    int numPlugins = 256;
-    String pathTemplate = "/home/dmitry/Documents/dynamic-services-makarov-proto/service-address/target/address-service-%s-0.1.0-plugin.jar";
+    int numPlugins = 128;
+    String pathTemplate = "/home/dmitry/Documents/dynamic-services-makarov-proto/service-address-plugin-repo/address-service-%s-0.1.0-plugin.jar";
 
     // Sleep to give some time to connect from JFR
     System.out.println("Connect now!");
@@ -30,47 +30,41 @@ public class DynamicModulesMain {
 
     PluginManager pluginManager = new DefaultPluginManager();
 
-    // Load and start plugins one by one
-    var loadedPlugins = new ArrayList<String>(numPlugins);
-    for (var pluginPath : pluginPaths) {
-      // Load a plugin
-      System.out.println("\uD83D\uDE80 Loading " + pluginPath);
+    for (int i = 0; ; i++) {
+      // Load and start plugins one by one
+      System.out.println("\uD83D\uDE80 Loading plugins i=" + i);
 
-      String pluginId = pluginManager.loadPlugin(pluginPath);
-      if (pluginId == null) {
-        // Why don't PluginManager#loadPlugin throw itself? How could clients possibly know
-        // why it failed to load a plugin?
-        throw new IllegalArgumentException("Could not load plugin " + pluginPath);
+      var loadedPlugins = new ArrayList<String>(numPlugins);
+      for (var pluginPath : pluginPaths) {
+        // Load a plugin
+        System.out.println("\uD83D\uDE80 Loading " + pluginPath);
+
+        String pluginId = pluginManager.loadPlugin(pluginPath);
+        if (pluginId == null) {
+          // Why don't PluginManager#loadPlugin throw itself? How could clients possibly know
+          // why it failed to load a plugin?
+          throw new IllegalArgumentException("Could not load plugin " + pluginPath);
+        }
+
+        System.out.println("\uD83D\uDE80 Loaded " + pluginId + " (" + pluginPath + ")");
+
+        // Register it
+        loadedPlugins.add(pluginId);
+
+        // Start it
+        System.out.println("\uD83D\uDE80 Starting " + pluginId);
+        pluginManager.startPlugin(pluginId);
+
+        // Sleep for a while
+        Thread.sleep(100);
       }
 
-      System.out.println("\uD83D\uDE80 Loaded " + pluginId + " (" + pluginPath + ")");
+      stopPlugins(pluginManager, loadedPlugins);
 
-      // Register it
-      loadedPlugins.add(pluginId);
-
-      // Start it
-      System.out.println("\uD83D\uDE80 Starting " + pluginId);
-      pluginManager.startPlugin(pluginId);
-
-      // Sleep for a while
-      Thread.sleep(100);
-    }
-
-    stopPlugins(pluginManager, loadedPlugins);
-
-    unloadPlugins(pluginManager, loadedPlugins);
-
-    Thread.sleep(500);
-    // Request some GC to see if it will reduce the number of loaded classes
-    for (int i = 0; i < 16; i++) {
-      System.out.println("Requesting gc " + i);
-      System.gc();
+      unloadPlugins(pluginManager, loadedPlugins);
+      System.out.println("\uD83D\uDE80 Unloaded plugins i=" + i);
       Thread.sleep(500);
     }
-
-    // Sleep to be able to dump
-    System.out.println("Done with GCs");
-    Thread.sleep(300 * 1000);
   }
 
   private static void stopPlugins(PluginManager pluginManager, List<String> plugins) {
